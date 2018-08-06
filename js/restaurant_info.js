@@ -21,8 +21,8 @@ initMap = () => {
         mapboxToken: 'pk.eyJ1IjoibG91aXNlZTgiLCJhIjoiY2prY3Y5MnZpMWIxaDNrcGRmdDlmNWJ4MiJ9.TAI9ZwpNz-UzV_ycC5qTzw',
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-          '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         id: 'mapbox.streets'    
       }).addTo(newMap);
       fillBreadcrumb();
@@ -32,46 +32,23 @@ initMap = () => {
 }  
 
 // Get current restaurant from page URL.
-// fetchRestaurantFromURL = (callback) => {
-//   if (self.restaurant) { 
-//     callback(null, self.restaurant)
-//     return;
-//   }
-//   const id = getParameterByName('id');
-//   if (!id) { 
-//     error = 'No restaurant id in URL'
-//     callback(error, null);
-//   } else {
-//     DBHelper.fetchRestaurantById(id, (error, restaurant) => {
-//       self.restaurant = restaurant;
-//       if (!restaurant) {
-//         console.error(error);
-//         return;
-//       }
-//       fillRestaurantHTML();
-//       callback(null, restaurant)
-//     });
-//   }
-// }
 const fetchRestaurantFromURL = () => {
   if (self.restaurant) { // restaurant already fetched!
-      return Promise.resolve(self.restaurant);
+    return Promise.resolve(self.restaurant);
   }
   const id = parseInt(getParameterByName('id'));
-  if (!id || id === isNaN) { // no id found in URL
-      return Promise.reject('No Restaurant found');
+  if (!id || id === isNaN) { // No id found in URL.
+    return Promise.reject('No Restaurant found');
   } else {
-      return DBHelper.fetchRestaurantById(id).then(restaurant => {
-          self.restaurant = restaurant;
-          if (!restaurant) {
-              return Promise.reject('restaurant not found');
-          }
-          fillRestaurantHTML();
-      });
+    return DBHelper.fetchRestaurantById(id).then(restaurant => {
+      self.restaurant = restaurant;
+      if (!restaurant) {
+        return Promise.reject('restaurant not found');
+      }
+      fillRestaurantHTML();
+    });
   }
 };
-
-
 
 // Create restaurant HTML and add it to the webpage.
 fillRestaurantHTML = (restaurant = self.restaurant) => {
@@ -93,7 +70,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   DBHelper.fetchReviewsByRestId(restaurant.id).then(reviews => {
 
     fillReviewsHTML(reviews);
-});
+  });
 }
 
 // Create restaurant operating hours HTML table and add it to the webpage.
